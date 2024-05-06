@@ -4,8 +4,7 @@
 
 | Name        | Description                              |
 | ----------- | ---------------------------------------- |
-| NextJS      | Frontend                                 |
-| NestJS      | Backend                                  |
+| NextJS      | Frontend & Backend                       |
 | Supabase    | Authentication and Database (PostgreSQL) |
 | Prisma      | ORM                                      |
 | TailwindCSS | CSS Framework                            |
