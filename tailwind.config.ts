@@ -21,13 +21,6 @@ const config: Config = {
         110: "27.5rem",
         160: "40rem",
       },
-      colors: {
-        "primary-color": "#FFFFFF",
-        "secondary-color": "#583296",
-        "accent-color": "#498E29",
-        "accent-color-110": "#5AA238",
-        "dark-color": "#0F2405",
-      },
       fontSize: {
         xs: ".6rem",
         sm: ".8rem",
@@ -54,11 +47,6 @@ const config: Config = {
       },
       dropShadow: {
         "custom-1": "0px 8px 4px rgba(0, 0, 0, .5)",
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },
