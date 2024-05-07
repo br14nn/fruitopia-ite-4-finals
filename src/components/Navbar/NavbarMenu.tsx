@@ -45,7 +45,7 @@ export default function NavbarMenu({ children }: INavbarMenuProps) {
       />
 
       <div
-        className={`${showMenu ? "scale-x-100 scale-y-100 delay-100" : "scale-x-50 scale-y-0"} fixed -bottom-4 left-0 flex w-full origin-top translate-y-full flex-col gap-4 rounded-3xl border-2 border-white bg-white/20 p-4 backdrop-blur-lg transition-all duration-200 ease-in-out`}
+        className={`${showMenu ? "scale-y-100" : "scale-y-0"} fixed -bottom-4 left-0 flex w-full origin-top translate-y-full flex-col gap-4 rounded-3xl border-2 border-white bg-white/20 p-4 backdrop-blur-lg transition-all duration-200 ease-in-out`}
       >
         {children}
       </div>

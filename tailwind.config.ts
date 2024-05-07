@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       scale: {
+        102: "1.02",
         112: "1.2",
         113: "1.3",
         115: "1.5",

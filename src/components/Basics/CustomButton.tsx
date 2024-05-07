@@ -13,7 +13,7 @@ export default function CustomButton({
   return (
     <button
       className={twMerge(
-        `white w-full rounded-full bg-white py-2 text-black transition-all duration-150 ease-in-out hover:scale-105`,
+        `white hover:scale-102 w-full rounded-full bg-white py-2 text-black transition-all duration-150 ease-in-out`,
         className,
       )}
       {...props}
