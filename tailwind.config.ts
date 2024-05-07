@@ -8,10 +8,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      scale: {
+        112: "1.2",
+        113: "1.3",
+        115: "1.5",
+      },
       height: {
+        screen: "100svh",
         17: "4.25rem",
       },
       width: {
+        screen: "100svw",
         22: "5.5rem",
       },
       maxWidth: {
@@ -22,20 +29,14 @@ const config: Config = {
         160: "40rem",
       },
       fontSize: {
-        xs: ".6rem",
-        sm: ".8rem",
-        md: "1.3rem",
-        lg: "1.6rem",
-        xl: "2rem",
-        "2xl": "2.4rem",
-        "3xl": "3.1rem",
-        "4xl": "3.8rem",
-        "5xl": "4.8rem",
-        "6xl": "5.9rem",
-        "7xl": "7.4rem",
-        "8xl": "9.3rem",
-        "9xl": "11.6rem",
-        "10xl": "14.5rem",
+        xs: ".4437rem",
+        sm: ".6687rem",
+        md: "1.5rem",
+        lg: "2.25rem",
+        xl: "3.375rem",
+        "2xl": "5.0625rem",
+        "3xl": "121.5px",
+        "4xl": "11.3938rem",
       },
       screens: {
         xs: "360px",
