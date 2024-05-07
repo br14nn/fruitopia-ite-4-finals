@@ -22,7 +22,7 @@ export default async function Navbar() {
   return (
     <div className="fixed z-[999] w-full p-4 md:p-9">
       <nav className="flex w-full items-center justify-between rounded-full border-2 border-white bg-white/20 px-6 py-4 backdrop-blur-lg">
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center lg:gap-6">
           <Image
             className="w-24 lg:w-36"
             width={200}
@@ -30,7 +30,7 @@ export default async function Navbar() {
             src={brandLogo}
             alt="Brand Logo"
           />
-          <div className="hidden flex-row items-center lg:flex">
+          <div className="hidden flex-row items-center gap-6 lg:flex">
             <NavbarLink href="#">Home</NavbarLink>
             <NavbarLink href="#">Fruits</NavbarLink>
             <NavbarLink href="#">About Us</NavbarLink>
