@@ -1,3 +1,3 @@
-export default async function Home() {
-  return <main className="h-[800px] w-full"></main>;
+export default async function HomePage() {
+  return <main className="h-[2000px] w-full"></main>;
 }

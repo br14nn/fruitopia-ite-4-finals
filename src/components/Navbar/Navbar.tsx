@@ -10,6 +10,7 @@ import NavbarMenuGoogleLoginButton from "./NavbarMenuGoogleLoginButton";
 import brandLogo from "@/assets/images/brand-logo.png";
 
 import { createClient } from "@/utils/supabase/server";
+import NavbarMenuLogoutButton from "./NavbarMenuLogoutButton";
 
 export default async function Navbar() {
   const supabase = createClient();
@@ -21,15 +22,9 @@ export default async function Navbar() {
 
   return (
     <div className="fixed z-[999] w-full p-4 md:p-9">
-      <nav className="flex w-full items-center justify-between rounded-full border-2 border-white bg-white/20 px-6 py-4 backdrop-blur-lg">
+      <nav className="flex w-full items-center justify-between rounded-full border-2 border-white bg-white/20 px-6 py-4 backdrop-blur-lg lg:px-9">
         <div className="flex flex-row items-center lg:gap-6">
-          <Image
-            className="w-24 lg:w-36"
-            width={200}
-            height={100}
-            src={brandLogo}
-            alt="Brand Logo"
-          />
+          <Image className="w-24 lg:w-36" src={brandLogo} alt="Brand Logo" />
           <div className="hidden flex-row items-center gap-6 lg:flex">
             <NavbarLink href="#">Home</NavbarLink>
             <NavbarLink href="#">Fruits</NavbarLink>
@@ -48,15 +43,23 @@ export default async function Navbar() {
             profilePhotoSrc={`https://lh3.googleusercontent.com/a/ACg8ocJaDbB0fjDC8nrhnnQzVOCvADz93QKAmVh-6t1QLFx_U4NkQlg=s96-c`}
             profileName={`Brian Vitualla`}
           /> */}
-          <div className="flex w-full flex-col items-center">
-            {user && <NavbarMenuLink href="#">View Basket</NavbarMenuLink>}
+          <div className="flex w-full flex-col items-center border-y-2 border-white py-4 lg:hidden">
+            {user && (
+              <NavbarMenuLink href="/basket">View Basket</NavbarMenuLink>
+            )}
             <NavbarMenuLink href="#">Home</NavbarMenuLink>
             <NavbarMenuLink href="#">Fruits</NavbarMenuLink>
             <NavbarMenuLink href="#">About Us</NavbarMenuLink>
           </div>
           <div className="flex w-full flex-col items-center gap-4">
-            <NavbarMenuGoogleLoginButton />
-            <NavbarMenuGithubLoginButton />
+            {!user ? (
+              <>
+                <NavbarMenuGoogleLoginButton />
+                <NavbarMenuGithubLoginButton />
+              </>
+            ) : (
+              <NavbarMenuLogoutButton />
+            )}
           </div>
         </NavbarMenu>
       </nav>

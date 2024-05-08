@@ -11,7 +11,7 @@ export default function NavbarMenuButtonProps({
   onClick,
 }: INavbarMenuButtonProps) {
   return (
-    <button className="block lg:hidden" onClick={onClick}>
+    <button onClick={onClick}>
       <IconContext.Provider value={{ color: "#FFFFFF", size: "24" }}>
         <LuMenu className="scale-x-113" />
       </IconContext.Provider>

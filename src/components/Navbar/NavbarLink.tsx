@@ -7,8 +7,9 @@ interface INavbarLinkProps {
 
 export default function NavbarLink({ children, href }: INavbarLinkProps) {
   return (
-    <Link className="text-white" href={href}>
+    <Link className="group relative text-white" href={href}>
       {children}
+      <hr className="absolute w-full origin-left scale-x-0 border border-yellow-500 transition-transform duration-200 ease-in-out group-hover:scale-x-100" />
     </Link>
   );
 }
