@@ -10,9 +10,10 @@ import NavbarMenuButton from "./NavbarMenuButton";
 
 interface INavbarMenuProps {
   children?: React.ReactNode;
+  user: any;
 }
 
-export default function NavbarMenu({ children }: INavbarMenuProps) {
+export default function NavbarMenu({ children, user }: INavbarMenuProps) {
   const navBarMenuRef = useRef() as any;
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
@@ -36,11 +37,13 @@ export default function NavbarMenu({ children }: INavbarMenuProps) {
 
   return (
     <div className="flex items-center gap-4">
-      <Link className="hidden lg:block" href="/basket">
-        <IconContext.Provider value={{ color: "#FFFFFF", size: "24" }}>
-          <LuShoppingBasket />
-        </IconContext.Provider>
-      </Link>
+      {user && (
+        <Link className="hidden lg:block" href="/basket">
+          <IconContext.Provider value={{ color: "#FFFFFF", size: "24" }}>
+            <LuShoppingBasket />
+          </IconContext.Provider>
+        </Link>
+      )}
       <div className="flex items-center" ref={navBarMenuRef}>
         <NavbarMenuButton onClick={handleClick} />
 

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import NavbarMenu from "./NavbarMenu";
 import NavbarMenuProfile from "./NavbarMenuProfile";
@@ -19,14 +18,12 @@ import { revalidateAllPaths } from "@/utils/actions/actions";
 
 export default function Navbar() {
   const supabase = createClient();
-  const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
   const handleLogout = async () => {
-    await revalidateAllPaths();
-
     try {
       await supabase.auth.signOut();
+      await revalidateAllPaths();
       setUser(null);
     } catch (error) {
       alert("Failed to logout user.");
@@ -34,8 +31,6 @@ export default function Navbar() {
   };
 
   const handleGoogleLogin = async () => {
-    await revalidateAllPaths();
-
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",
@@ -43,6 +38,7 @@ export default function Navbar() {
           redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/api/auth/callback`,
         },
       });
+      await revalidateAllPaths();
     } catch (error) {
       alert("Failed to sign in with Google.");
     }
@@ -85,7 +81,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          <NavbarMenu>
+          <NavbarMenu user={user}>
             {user && (
               <NavbarMenuProfile
                 profilePhotoSrc={user.user_metadata.avatar_url}

@@ -11,7 +11,7 @@ export default async function HomePage() {
       <HeroBg2 />
       <main className="h-fit w-full">
         <HeroSection />
-        <section className="h-[1000px] w-full max-w-[2000px]"></section>
+        <section className="h-screen w-full max-w-[2000px]"></section>
       </main>
     </>
   );
