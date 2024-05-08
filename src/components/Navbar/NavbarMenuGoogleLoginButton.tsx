@@ -1,35 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Google } from "grommet-icons";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 
 import CustomButton from "@/components/CustomButton";
 
-import { createClient } from "@/utils/supabase/client";
-import { revalidateAllPaths } from "@/utils/actions/actions";
+interface INavbarMenuGoogleLoginButtonProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
 
-export default function NavbarMenuGoogleLoginButton() {
-  const router = useRouter();
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    try {
-      const supabase = createClient();
-      await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/api/auth/callback`,
-        },
-      });
-      await revalidateAllPaths();
-    } catch (error) {
-      alert("Failed to sign in with Google");
-      await revalidateAllPaths();
-      router.push("/");
-    }
-  };
-
+export default function NavbarMenuGoogleLoginButton({
+  onClick,
+}: INavbarMenuGoogleLoginButtonProps) {
   return (
     <LazyMotion features={domAnimation}>
       <m.div
@@ -39,7 +21,7 @@ export default function NavbarMenuGoogleLoginButton() {
       >
         <CustomButton
           className="flex items-center justify-center gap-2"
-          onClick={handleClick}
+          onClick={onClick}
         >
           Sign in with Google <Google size="20" color="plain" />
         </CustomButton>
