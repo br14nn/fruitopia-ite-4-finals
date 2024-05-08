@@ -1,14 +1,18 @@
 import Image from "next/image";
 
 import HeroSection from "@/components/HeroSection/HeroSection";
-
-import heroBg1 from "@/assets/images/hero-bg-1.png";
-import heroBg2 from "@/assets/images/hero-bg-2.png";
+import HeroBg1 from "@/components/HeroBg/HeroBg1";
+import HeroBg2 from "@/components/HeroBg/HeroBg2";
 
 export default async function HomePage() {
   return (
-    <main className="h-fit w-full">
-      <HeroSection />
-    </main>
+    <>
+      <HeroBg1 />
+      <HeroBg2 />
+      <main className="h-fit w-full">
+        <HeroSection />
+        <section className="h-[1000px] w-full max-w-[2000px]"></section>
+      </main>
+    </>
   );
 }

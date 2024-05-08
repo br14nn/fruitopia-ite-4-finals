@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { m, domAnimation, LazyMotion } from "framer-motion";
 
-import CustomButton from "@/components/Basics/CustomButton";
+import CustomButton from "@/components/CustomButton";
 
 import { createClient } from "@/utils/supabase/client";
 import { revalidateAllPaths } from "@/utils/actions/actions";

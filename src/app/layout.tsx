@@ -18,7 +18,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body id="body" className={`${playfair_Display.className} bg-zinc-950`}>
+      <body
+        id="body"
+        className={`${playfair_Display.className} overflow-x-hidden bg-zinc-950`}
+      >
         <Navbar />
         {children}
       </body>
