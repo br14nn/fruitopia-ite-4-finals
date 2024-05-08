@@ -21,7 +21,7 @@ export default async function Navbar() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="fixed z-[999] w-full p-4 md:p-9">
+    <div className="fixed left-0 right-0 z-[999] mx-auto w-full max-w-[2000px] p-4 md:p-9">
       <nav className="flex w-full items-center justify-between rounded-full border-2 border-white bg-white/20 px-6 py-4 backdrop-blur-lg lg:px-9">
         <div className="flex flex-row items-center lg:gap-6">
           <Image className="w-24 lg:w-36" src={brandLogo} alt="Brand Logo" />

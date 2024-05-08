@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { m, domAnimation, LazyMotion } from "framer-motion";
 
 import CustomButton from "@/components/Basics/CustomButton";
 
 import { createClient } from "@/utils/supabase/client";
-import { logout, revalidateAllPaths } from "@/utils/actions/actions";
+import { revalidateAllPaths } from "@/utils/actions/actions";
 
 export default function NavbarMenuLogoutButton() {
   const router = useRouter();
@@ -13,20 +14,32 @@ export default function NavbarMenuLogoutButton() {
     e.preventDefault();
 
     try {
-      await logout();
+      const supabase = createClient();
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw Error();
+
+      await revalidateAllPaths();
     } catch (error) {
       alert("Failed to sign out");
-      revalidateAllPaths();
-      router.push("/");
+      await revalidateAllPaths();
     }
   };
 
   return (
-    <CustomButton
-      className="bg-red-500 font-bold text-white"
-      onClick={handleClick}
-    >
-      Logout
-    </CustomButton>
+    <LazyMotion features={domAnimation}>
+      <m.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-full"
+      >
+        <CustomButton
+          className="bg-red-500 font-bold text-white"
+          onClick={handleClick}
+        >
+          Logout
+        </CustomButton>
+      </m.div>
+    </LazyMotion>
   );
 }

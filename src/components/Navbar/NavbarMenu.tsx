@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { IconContext } from "react-icons";
 import { LuShoppingBasket } from "react-icons/lu";
+import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 
 import NavbarMenuButton from "./NavbarMenuButton";
 
@@ -16,12 +17,10 @@ export default function NavbarMenu({ children }: INavbarMenuProps) {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setShowMenu(!showMenu);
+    setShowMenu((oldVal) => !oldVal);
   };
 
   useEffect(() => {
-    console.log("Hello World");
-
     const handleMouseDown = (e: any) => {
       if (!navBarMenuRef.current.contains(e.target)) {
         setShowMenu(false);
@@ -36,28 +35,36 @@ export default function NavbarMenu({ children }: INavbarMenuProps) {
   });
 
   return (
-    <>
-      <div className="flex items-center gap-4">
-        <Link className="hidden lg:block" href="/basket">
-          <IconContext.Provider value={{ color: "#FFFFFF", size: "24" }}>
-            <LuShoppingBasket />
-          </IconContext.Provider>
-        </Link>
-        <div className="flex items-center" ref={navBarMenuRef}>
-          <NavbarMenuButton onClick={handleClick} />
+    <div className="flex items-center gap-4">
+      <Link className="hidden lg:block" href="/basket">
+        <IconContext.Provider value={{ color: "#FFFFFF", size: "24" }}>
+          <LuShoppingBasket />
+        </IconContext.Provider>
+      </Link>
+      <div className="flex items-center" ref={navBarMenuRef}>
+        <NavbarMenuButton onClick={handleClick} />
 
-          <div
-            className={`${showMenu ? "scale-y-100" : "scale-y-0"} absolute -bottom-4 right-0 flex w-full origin-top translate-y-full flex-col gap-4 rounded-3xl border-2 border-white bg-white/20 p-4 backdrop-blur-lg transition-all duration-200 ease-in-out lg:max-w-80`}
-          >
-            {children}
-          </div>
-        </div>
+        <LazyMotion features={domAnimation}>
+          <AnimatePresence>
+            {showMenu && (
+              <m.div
+                initial={{
+                  scaleY: 0,
+                  translateY: "100%",
+                  transformOrigin: "top",
+                  bottom: "-16px",
+                  right: 0,
+                }}
+                animate={{ scaleY: 1 }}
+                exit={{ scaleY: 0 }}
+                className={`absolute flex w-full flex-col gap-4 rounded-3xl border-2 border-white bg-white/20 p-4 backdrop-blur-lg lg:max-w-80`}
+              >
+                {children}
+              </m.div>
+            )}
+          </AnimatePresence>
+        </LazyMotion>
       </div>
-
-      {/* <button
-        className={`${showMenu ? "block" : "hidden"} absolute inset-0 -m-4 h-screen w-screen cursor-default bg-transparent lg:-m-9`}
-        onClick={handleClick}
-      /> */}
-    </>
+    </div>
   );
 }

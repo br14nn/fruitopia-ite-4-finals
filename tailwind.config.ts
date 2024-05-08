@@ -14,6 +14,9 @@ const config: Config = {
         113: "1.3",
         115: "1.5",
       },
+      minHeight: {
+        150: "37.5rem",
+      },
       height: {
         screen: "100svh",
         17: "4.25rem",

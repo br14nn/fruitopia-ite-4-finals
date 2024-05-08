@@ -12,6 +12,7 @@
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.0",
     "axios": "^1.6.8",
+    "framer-motion": "^11.1.9",
     "grommet-icons": "^4.12.1",
     "next": "14.2.3",
     "react": "^18",
