@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import HeroSection from "@/components/HeroSection/HeroSection";
 import HeroBg1 from "@/components/HeroBg/HeroBg1";
 import HeroBg2 from "@/components/HeroBg/HeroBg2";
