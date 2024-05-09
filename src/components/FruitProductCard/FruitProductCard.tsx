@@ -1,6 +1,6 @@
 "use client";
 
-import { revalidateAllPaths } from "@/utils/actions/actions";
+import { revalidateSepcificPath } from "@/utils/actions/actions";
 import Image from "next/image";
 
 interface IFruitProductCardProps {
@@ -26,7 +26,10 @@ export default function FruitProductCard({
       });
       const data = await res.json();
 
-      if (data) alert("Added to cart successfully");
+      if (data) {
+        revalidateSepcificPath("/basket");
+        alert("Added to cart successfully");
+      }
     } catch (error) {
       console.error(error);
     }

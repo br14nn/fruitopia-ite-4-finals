@@ -3,6 +3,48 @@ import { NextResponse, type NextRequest } from "next/server";
 import prisma from "@/utils/prisma/db";
 import { createClient } from "@/utils/supabase/server";
 
+export async function DELETE(req: NextRequest) {
+  const reqJson = (await req.json()) as { fruitId: number };
+
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  await prisma.cart.deleteMany({
+    where: {
+      AND: [
+        {
+          userId: user?.id,
+        },
+        {
+          fruitId: reqJson.fruitId,
+        },
+      ],
+    },
+  });
+
+  return NextResponse.json({ message: "Delete a cart item" });
+}
+
+export async function GET(req: NextRequest) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const res = await prisma.cart.findMany({
+    include: {
+      fruit: true,
+    },
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  return NextResponse.json(res);
+}
+
 export async function POST(req: NextRequest) {
   const reqBody = (await req.json()) as { id: number };
   const supabase = createClient();

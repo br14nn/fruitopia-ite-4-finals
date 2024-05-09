@@ -86,7 +86,7 @@ export default function Navbar() {
             )}
             <div className="flex w-full flex-col items-center border-y-2 border-white py-4 lg:hidden">
               {user && (
-                <NavbarMenuLink href="/basket">View Basket</NavbarMenuLink>
+                <NavbarMenuLink href="/basket">View Cart</NavbarMenuLink>
               )}
               <NavbarMenuLink href="/#home">Home</NavbarMenuLink>
               <NavbarMenuLink href="/#fruits">Fruits</NavbarMenuLink>

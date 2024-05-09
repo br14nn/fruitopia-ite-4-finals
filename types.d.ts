@@ -5,3 +5,11 @@ interface IFruit {
   description: string;
   image: string;
 }
+
+interface ICart {
+  id: number;
+  userId: string;
+  fruitId: 1;
+  quantity: 3;
+  fruit: IFruit;
+}

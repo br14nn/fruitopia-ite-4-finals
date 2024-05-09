@@ -2,8 +2,6 @@ import { nanoid } from "nanoid";
 
 import FruitProductCard from "../FruitProductCard/FruitProductCard";
 
-export const revalidate = 3600;
-
 export default async function FruitsSection() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/fruits`, {
     method: "GET",
@@ -22,7 +20,7 @@ export default async function FruitsSection() {
             key={nanoid()}
             id={fruit.id}
             name={fruit.name}
-            price={fruit.price.toString()}
+            price={fruit.price.toFixed(2).toString()}
             description={fruit.description}
             imgSrc={fruit.image}
           />
