@@ -43,6 +43,9 @@ const config: Config = {
         "3xl": "121.5px",
         "4xl": "11.3938rem",
       },
+      letterSpacing: {
+        "widest-xl": "0.2em",
+      },
       screens: {
         xs: "360px",
         sm: "640px",

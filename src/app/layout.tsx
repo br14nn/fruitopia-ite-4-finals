@@ -20,7 +20,7 @@ export default async function RootLayout({
     <html lang="en">
       <body
         id="body"
-        className={`${playfair_Display.className} overflow-x-hidden bg-zinc-950`}
+        className={`${playfair_Display.className} min-h-150 w-full overflow-x-hidden bg-zinc-950`}
       >
         <Navbar />
         {children}

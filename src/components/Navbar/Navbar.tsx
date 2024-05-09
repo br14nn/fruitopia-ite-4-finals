@@ -67,7 +67,7 @@ export default function Navbar() {
         animate={{ translateY: "0" }}
         className="fixed left-0 right-0 z-[999] mx-auto w-full max-w-[2000px] px-4 pt-4 md:px-9 md:pt-9"
       >
-        <nav className="flex w-full items-center justify-between rounded-full border-2 border-white bg-white/20 px-6 py-4 backdrop-blur-lg lg:px-9">
+        <nav className="flex w-full items-center justify-between rounded-full border-2 border-white bg-white/20 px-6 py-4 backdrop-blur-2xl lg:px-9">
           <div className="flex flex-row items-center lg:gap-6">
             <Image className="w-24 lg:w-36" src={brandLogo} alt="Brand Logo" />
             <div className="hidden flex-row items-center gap-6 lg:flex">

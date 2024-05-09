@@ -10,5 +10,22 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("NEXT_PRIVATE_DATABASE_URL")
+  url      = env("DATABASE_URL")
+}
+
+model Fruit {
+  id          Int     @id @default(autoincrement())
+  name        String
+  price       Float
+  description String?
+  image       String
+  Cart        Cart[]
+}
+
+model Cart {
+  id       Int    @id @default(autoincrement())
+  userId   String
+  fruit    Fruit  @relation(fields: [fruitId], references: [id])
+  fruitId  Int
+  quantity Int
 }
