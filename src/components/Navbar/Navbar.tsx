@@ -71,9 +71,9 @@ export default function Navbar() {
           <div className="flex flex-row items-center lg:gap-6">
             <Image className="w-24 lg:w-36" src={brandLogo} alt="Brand Logo" />
             <div className="hidden flex-row items-center gap-6 lg:flex">
-              <NavbarLink href="#">Home</NavbarLink>
-              <NavbarLink href="#">Fruits</NavbarLink>
-              <NavbarLink href="#">About Us</NavbarLink>
+              <NavbarLink href="#home">Home</NavbarLink>
+              <NavbarLink href="#fruits">Fruits</NavbarLink>
+              <NavbarLink href="#home">About Us</NavbarLink>
             </div>
           </div>
 
@@ -88,9 +88,9 @@ export default function Navbar() {
               {user && (
                 <NavbarMenuLink href="/basket">View Basket</NavbarMenuLink>
               )}
-              <NavbarMenuLink href="#">Home</NavbarMenuLink>
-              <NavbarMenuLink href="#">Fruits</NavbarMenuLink>
-              <NavbarMenuLink href="#">About Us</NavbarMenuLink>
+              <NavbarMenuLink href="#home">Home</NavbarMenuLink>
+              <NavbarMenuLink href="#fruits">Fruits</NavbarMenuLink>
+              <NavbarMenuLink href="#home">About Us</NavbarMenuLink>
             </div>
             <div className="flex w-full flex-col items-center gap-4">
               {!user ? (

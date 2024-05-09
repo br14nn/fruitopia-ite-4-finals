@@ -17,7 +17,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         id="body"
         className={`${playfair_Display.className} min-h-150 w-full overflow-x-hidden bg-zinc-950`}

@@ -5,7 +5,10 @@ import { m, LazyMotion, domAnimation } from "framer-motion";
 export default function HeroSection() {
   return (
     <LazyMotion features={domAnimation}>
-      <section className="min-h-150 relative z-50 mx-auto flex h-screen w-full max-w-[2000px] items-center justify-center p-9">
+      <section
+        id="home"
+        className="relative z-50 mx-auto flex h-screen min-h-150 w-full max-w-[2000px] items-center justify-center p-9"
+      >
         <div className="flex flex-row items-center justify-center gap-3 leading-none md:gap-6">
           <div className="flex flex-col items-end justify-center overflow-hidden">
             <m.p
