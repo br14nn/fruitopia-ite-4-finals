@@ -25,7 +25,7 @@ export default function HeroBg2() {
           translateX: "0",
           translateY: "0",
         }}
-        className="absolute -bottom-20 right-0 h-auto w-72 lg:-bottom-64 lg:w-auto"
+        className="absolute -bottom-20 right-0 h-auto w-72 lg:w-96 2xl:-bottom-64 2xl:w-auto"
         src={heroBg2}
         alt="hero bg 1"
       />

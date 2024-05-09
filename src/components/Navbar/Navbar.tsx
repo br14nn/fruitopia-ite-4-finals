@@ -49,11 +49,7 @@ export default function Navbar() {
       try {
         const {
           data: { user },
-          error,
         } = await supabase.auth.getUser();
-
-        console.log(user);
-
         setUser(user);
       } catch (error) {
         alert("Something went wrong with Supabase Authenticatoin.");
