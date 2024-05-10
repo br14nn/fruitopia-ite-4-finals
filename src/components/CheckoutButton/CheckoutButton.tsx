@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import axios from "axios";
+
+import { createClient } from "@/utils/supabase/client";
 import { revalidateAllPaths } from "@/utils/actions/actions";
 
 export default function CheckoutButton() {
@@ -11,8 +13,18 @@ export default function CheckoutButton() {
     e.preventDefault();
     setDisabled(true);
     try {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw Error();
       const { data } = (await axios.delete(
         `${process.env.NEXT_PUBLIC_DOMAIN}/api/cart/checkout`,
+        {
+          data: {
+            userId: user.id,
+          },
+        },
       )) as { data: ICheckout };
       setDisabled(false);
       revalidateAllPaths();

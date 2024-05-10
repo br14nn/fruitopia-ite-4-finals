@@ -1,11 +1,11 @@
 "use client";
 
-import { revalidateSepcificPath } from "@/utils/actions/actions";
 import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 
 import { createClient } from "@/utils/supabase/client";
+import { revalidateSepcificPath } from "@/utils/actions/actions";
 
 interface IFruitProductCardProps {
   id: number;
@@ -37,13 +37,14 @@ export default function FruitProductCard({
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`,
         {
+          userId: user.id,
           fruitId: id,
         },
       );
 
       if (res) {
-        setDisabled(false);
         revalidateSepcificPath("/basket");
+        setDisabled(false);
         alert("Added to cart successfully");
       }
     } catch (error) {

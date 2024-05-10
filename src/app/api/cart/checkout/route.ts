@@ -1,24 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/utils/prisma/db";
-import { createClient } from "@/utils/supabase/server";
 
 export async function DELETE(req: NextRequest) {
   try {
-    const supabase = createClient();
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) throw Error();
-
+    const reqJson = (await req.json()) as { userId: string };
     const res = await prisma.cart.deleteMany({
       where: {
-        userId: user.id,
+        userId: reqJson.userId,
       },
     });
-
     return NextResponse.json(
       {
         count: res.count,

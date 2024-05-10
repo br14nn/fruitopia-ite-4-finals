@@ -1,27 +1,33 @@
-import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 import CheckoutButton from "@/components/CheckoutButton/CheckoutButton";
 import FruitProductCartCard from "@/components/FruitProductCartCard/FruitProductCartCard";
 
-export default async function BasketPage() {
-  try {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+import { createClient } from "@/utils/supabase/server";
 
-    if (!user) redirect("/");
+export default async function BasketPage() {
+  let data: ICart[] = [];
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect("/");
+
+  try {
+    const {
+      data: { res },
+    } = (await axios.get(
+      `${process.env.NEXT_PUBLIC_DOMAIN}/api/cart/user/${user.id}`,
+    )) as { data: { res: ICart[] } };
+    data = res;
   } catch (error) {
-    redirect("/");
+    console.error(error);
   }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`, {
-    method: "GET",
-    cache: "no-cache",
-  });
-  const data = (await res.json()) as ICart[];
   const totalPrice = (): number => {
     return data.reduce((total, fruit) => {
       return total + fruit.quantity * fruit.fruit.price;
@@ -37,13 +43,12 @@ export default async function BasketPage() {
           {data.map((cart) => (
             <FruitProductCartCard
               key={nanoid()}
+              orderId={cart.id}
               fruitId={cart.fruitId}
               name={cart.fruit.name}
               imgSrc={cart.fruit.image}
-              quantity={cart.quantity.toString()}
-              totalPrice={(cart.quantity * cart.fruit.price)
-                .toFixed(2)
-                .toString()}
+              quantity={cart.quantity}
+              price={cart.fruit.price}
             />
           ))}
         </div>

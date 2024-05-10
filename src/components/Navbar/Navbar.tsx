@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import NavbarMenu from "./NavbarMenu";
 import NavbarMenuProfile from "./NavbarMenuProfile";
@@ -17,6 +18,7 @@ import { createClient } from "@/utils/supabase/client";
 import { revalidateAllPaths } from "@/utils/actions/actions";
 
 export default function Navbar() {
+  const router = useRouter();
   const supabase = createClient();
   const [user, setUser] = useState<any>(null);
 
@@ -25,6 +27,7 @@ export default function Navbar() {
       await supabase.auth.signOut();
       await revalidateAllPaths();
       setUser(null);
+      router.replace("/");
     } catch (error) {
       alert("Failed to logout user.");
     }

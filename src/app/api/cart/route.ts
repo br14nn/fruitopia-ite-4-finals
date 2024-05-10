@@ -1,45 +1,60 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import prisma from "@/utils/prisma/db";
-import { createClient } from "@/utils/supabase/server";
 
-export async function GET(req: NextRequest) {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export async function DELETE(req: NextRequest) {
+  try {
+    const reqJson = (await req.json()) as { orderId: number };
+    await prisma.cart.delete({
+      where: {
+        id: reqJson.orderId,
+      },
+    });
+    return NextResponse.json({ message: "Delete a cart item" });
+  } catch (error) {
+    return NextResponse.json({ message: "Failed to delete an order" });
+  }
+}
 
-  const res = await prisma.cart.findMany({
-    include: {
-      fruit: true,
-    },
-    where: {
-      userId: user?.id,
-    },
-  });
-
-  return NextResponse.json(res);
+export async function PUT(req: NextRequest) {
+  try {
+    const reqJson = (await req.json()) as { orderId: number; quantity: number };
+    const res = await prisma.cart.update({
+      data: {
+        quantity: reqJson.quantity,
+      },
+      where: {
+        id: reqJson.orderId,
+      },
+    });
+    return NextResponse.json(
+      {
+        updatedData: res,
+        message: "Successfully updated cart",
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Failed to update cart" },
+      { status: 400 },
+    );
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const reqBody = (await req.json()) as { fruitId: number };
-  const supabase = createClient();
-
   try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) throw Error();
-
+    const reqJson = (await req.json()) as { userId: string; fruitId: number };
     const res = await prisma.cart.findFirst({
       where: {
         AND: [
           {
-            userId: user.id,
+            userId: reqJson.userId,
           },
           {
-            fruitId: reqBody.fruitId,
+            fruitId: reqJson.fruitId,
           },
         ],
       },
@@ -48,9 +63,9 @@ export async function POST(req: NextRequest) {
     if (!res) {
       await prisma.cart.create({
         data: {
-          userId: user.id,
+          userId: reqJson.userId,
           quantity: 1,
-          fruitId: reqBody.fruitId,
+          fruitId: reqJson.fruitId,
         },
       });
     } else {
@@ -63,10 +78,10 @@ export async function POST(req: NextRequest) {
         where: {
           AND: [
             {
-              userId: user.id,
+              userId: reqJson.userId,
             },
             {
-              fruitId: reqBody.fruitId,
+              fruitId: reqJson.fruitId,
             },
           ],
         },
