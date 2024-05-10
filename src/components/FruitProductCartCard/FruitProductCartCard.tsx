@@ -18,50 +18,51 @@ export default function FruitProductCartCard({
   totalPrice,
   quantity,
 }: IFruitProductCartCardProps) {
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const { id } = e.currentTarget;
 
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`, {
-        method: "DELETE",
-        body: JSON.stringify({ fruitId: fruitId }),
-      });
+    if (id === "deleteCartItem") {
+      try {
+        await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`, {
+          method: "DELETE",
+          body: JSON.stringify({ fruitId: fruitId }),
+        });
 
-      revalidateAllPaths();
-    } catch (error) {
-      console.error(error);
+        revalidateAllPaths();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   return (
-    <div className="flex w-full flex-row items-center justify-between rounded-full border-2 border-white p-4 text-white">
-      <div className="flex-inital flex w-[40%] flex-row items-center gap-4 overflow-hidden">
-        <Image
-          className="aspect-square w-20 rounded-full"
-          src={imgSrc}
-          width={512}
-          height={0}
-          alt="Fruit Image"
-        />
-        <p className="text-lg text-yellow-500">{name}</p>
-      </div>
-
-      <p className="text-white">
-        QTY: <span className="text-md">{quantity}</span>
-      </p>
-
-      <p className="text-white">
-        Total Price: <span className="text-md font-bold">₱{totalPrice}</span>
-      </p>
-      <form
-        className="flex h-full flex-row items-center gap-4"
-        id="delete"
-        onSubmit={handleSubmit}
-      >
-        <button className="rounded-full border-2 border-red-600 px-4 transition-colors duration-300 hover:bg-red-600 active:border-red-300 active:bg-red-300">
+    <div className="flex w-full flex-row items-center gap-4 rounded-lg border-2 border-white p-2 text-white">
+      <Image
+        className="aspect-square w-full max-w-28 rounded-lg object-cover lg:max-w-36"
+        src={imgSrc}
+        width={512}
+        height={0}
+        alt="Fruit Image"
+      />
+      <div className="flex h-full flex-grow flex-col justify-between">
+        <div className="flex flex-col gap-2">
+          <p className="max-w-50 truncate text-yellow-500 lg:text-md">{name}</p>
+          <p className="text-sm text-white/50 lg:text-base">
+            QTY: <span className="font-bold text-white">{quantity}</span>
+          </p>
+          <p className="text-sm text-white/50 lg:text-base">
+            Total: <span className="font-bold text-white">₱{totalPrice}</span>
+          </p>
+        </div>
+        <button
+          className="w-full max-w-28 self-end rounded-full border-2 border-red-600 py-0.5 text-sm transition-colors duration-300 hover:bg-red-600 active:border-red-300 active:bg-red-300 lg:text-base"
+          id="deleteCartItem"
+          onClick={handleClick}
+        >
           Delete
         </button>
-      </form>
+      </div>
     </div>
   );
 }

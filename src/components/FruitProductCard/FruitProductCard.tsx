@@ -2,6 +2,7 @@
 
 import { revalidateSepcificPath } from "@/utils/actions/actions";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/client";
 
 interface IFruitProductCardProps {
   id: number;
@@ -20,12 +21,20 @@ export default function FruitProductCard({
 }: IFruitProductCardProps) {
   const handleClick = async () => {
     try {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        return alert("Must be logged in to add fruits to the cart");
+      }
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`, {
         method: "POST",
         body: JSON.stringify({ id: id }),
       });
       const data = await res.json();
-
       if (data) {
         revalidateSepcificPath("/basket");
         alert("Added to cart successfully");
@@ -47,10 +56,13 @@ export default function FruitProductCard({
       />
       <figcaption className="flex w-full flex-col items-center gap-4">
         <div className="flex w-full flex-row items-center justify-between gap-4">
-          <p className="overflow-hidden text-md text-yellow-500 xl:text-lg">
+          <p
+            className="flex-grow truncate text-md text-yellow-500 xl:text-lg"
+            title={name}
+          >
             {name}
           </p>
-          <p className="overflow-hidden tracking-widest-xl text-white xl:text-md">
+          <p className="tracking-widest-xl text-white xl:text-md">
             ₱{price.toUpperCase()}
           </p>
         </div>
