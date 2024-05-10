@@ -5,8 +5,11 @@ import prisma from "@/utils/prisma/db";
 export async function GET(req: NextRequest) {
   try {
     const res = await prisma.fruit.findMany({});
-    return NextResponse.json(res);
+    return NextResponse.json(res, { status: 200 });
   } catch (error) {
-    throw Error("Failed to get fruits data");
+    return NextResponse.json(
+      { message: "Failed to get fruits data" },
+      { status: 400 },
+    );
   }
 }

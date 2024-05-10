@@ -3,30 +3,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import prisma from "@/utils/prisma/db";
 import { createClient } from "@/utils/supabase/server";
 
-export async function DELETE(req: NextRequest) {
-  const reqJson = (await req.json()) as { fruitId: number };
-
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  await prisma.cart.deleteMany({
-    where: {
-      AND: [
-        {
-          userId: user?.id,
-        },
-        {
-          fruitId: reqJson.fruitId,
-        },
-      ],
-    },
-  });
-
-  return NextResponse.json({ message: "Delete a cart item" });
-}
-
 export async function GET(req: NextRequest) {
   const supabase = createClient();
   const {
@@ -46,7 +22,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const reqBody = (await req.json()) as { id: number };
+  const reqBody = (await req.json()) as { fruitId: number };
   const supabase = createClient();
 
   try {
@@ -63,7 +39,7 @@ export async function POST(req: NextRequest) {
             userId: user.id,
           },
           {
-            fruitId: reqBody.id,
+            fruitId: reqBody.fruitId,
           },
         ],
       },
@@ -74,7 +50,7 @@ export async function POST(req: NextRequest) {
         data: {
           userId: user.id,
           quantity: 1,
-          fruitId: reqBody.id,
+          fruitId: reqBody.fruitId,
         },
       });
     } else {
@@ -90,15 +66,21 @@ export async function POST(req: NextRequest) {
               userId: user.id,
             },
             {
-              fruitId: reqBody.id,
+              fruitId: reqBody.fruitId,
             },
           ],
         },
       });
     }
 
-    return NextResponse.json({ message: "Added to cart successfully" });
+    return NextResponse.json(
+      { message: "Added to cart successfully" },
+      { status: 200 },
+    );
   } catch (error) {
-    throw Error("Failed to add to the cart");
+    return NextResponse.json(
+      { message: "Failed to add to the cart" },
+      { status: 400 },
+    );
   }
 }

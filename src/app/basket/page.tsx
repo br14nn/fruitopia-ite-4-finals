@@ -1,8 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-
-import FruitProductCartCard from "@/components/FruitProductCartCard/FruitProductCartCard";
 import { nanoid } from "nanoid";
+
+import CheckoutButton from "@/components/CheckoutButton/CheckoutButton";
+import FruitProductCartCard from "@/components/FruitProductCartCard/FruitProductCartCard";
 
 export default async function BasketPage() {
   try {
@@ -30,9 +31,9 @@ export default async function BasketPage() {
   return (
     <main className="flex h-fit w-full">
       <section className="flex h-screen w-full max-w-[2000px] flex-col gap-4 px-10 pb-10 pt-24 md:px-20 md:pt-32">
-        <h1 className="text-lg leading-none text-white">My Cart</h1>
+        <h1 className="text-center text-lg leading-none text-white">My Cart</h1>
         <hr className="w-full border-2 border-yellow-500" />
-        <div className="grid h-full w-full grid-cols-1 gap-4 overflow-y-auto px-2 sm:grid-cols-2">
+        <div className="grid h-full w-full grid-cols-1 content-start gap-4 overflow-y-auto px-2 sm:grid-cols-2">
           {data.map((cart) => (
             <FruitProductCartCard
               key={nanoid()}
@@ -55,12 +56,7 @@ export default async function BasketPage() {
             </span>
           </p>
 
-          <button
-            id="checkout"
-            className="rounded-full border-2 border-green-500 px-6 py-0.5 text-white transition-colors duration-300 hover:bg-green-500 active:border-green-300 active:bg-green-300"
-          >
-            Checkout
-          </button>
+          <CheckoutButton />
         </div>
       </section>
     </main>

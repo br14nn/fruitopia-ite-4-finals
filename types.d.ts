@@ -13,3 +13,8 @@ interface ICart {
   quantity: 3;
   fruit: IFruit;
 }
+
+interface ICheckout {
+  count: number;
+  message: string;
+}

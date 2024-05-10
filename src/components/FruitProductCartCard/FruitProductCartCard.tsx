@@ -1,7 +1,10 @@
 "use client";
 
-import { revalidateAllPaths } from "@/utils/actions/actions";
 import Image from "next/image";
+import { useState } from "react";
+import axios from "axios";
+
+import { revalidateAllPaths } from "@/utils/actions/actions";
 
 interface IFruitProductCartCardProps {
   fruitId: number;
@@ -18,18 +21,22 @@ export default function FruitProductCartCard({
   totalPrice,
   quantity,
 }: IFruitProductCartCardProps) {
+  const [disabled, setDisabled] = useState<boolean>(false);
+
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
-
     if (id === "deleteCartItem") {
+      setDisabled(true);
       try {
-        await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`, {
-          method: "DELETE",
-          body: JSON.stringify({ fruitId: fruitId }),
-        });
-
-        revalidateAllPaths();
+        const res = await axios.delete(
+          `${process.env.NEXT_PUBLIC_DOMAIN}/api/cart/${fruitId}`,
+        );
+        if (res) {
+          setDisabled(false);
+          revalidateAllPaths();
+          alert("Successfully deleted an item in your cart!");
+        }
       } catch (error) {
         console.error(error);
       }
@@ -37,13 +44,14 @@ export default function FruitProductCartCard({
   };
 
   return (
-    <div className="flex w-full flex-row items-center gap-4 rounded-lg border-2 border-white p-2 text-white">
+    <div className="flex h-fit w-full flex-row items-center gap-4 rounded-lg border-2 border-white p-2 text-white">
       <Image
         className="aspect-square w-full max-w-28 rounded-lg object-cover lg:max-w-36"
         src={imgSrc}
         width={512}
         height={0}
         alt="Fruit Image"
+        priority
       />
       <div className="flex h-full flex-grow flex-col justify-between">
         <div className="flex flex-col gap-2">
@@ -56,9 +64,10 @@ export default function FruitProductCartCard({
           </p>
         </div>
         <button
-          className="w-full max-w-28 self-end rounded-full border-2 border-red-600 py-0.5 text-sm transition-colors duration-300 hover:bg-red-600 active:border-red-300 active:bg-red-300 lg:text-base"
+          className="w-full max-w-28 self-end rounded-full border-2 border-red-600 py-0.5 text-sm transition-colors duration-300 hover:bg-red-600 active:border-red-300 active:bg-red-300 disabled:border-red-900 disabled:bg-red-900 lg:text-base"
           id="deleteCartItem"
           onClick={handleClick}
+          disabled={disabled}
         >
           Delete
         </button>

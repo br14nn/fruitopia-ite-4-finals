@@ -2,6 +2,9 @@
 
 import { revalidateSepcificPath } from "@/utils/actions/actions";
 import Image from "next/image";
+import { useState } from "react";
+import axios from "axios";
+
 import { createClient } from "@/utils/supabase/client";
 
 interface IFruitProductCardProps {
@@ -19,23 +22,27 @@ export default function FruitProductCard({
   price,
   description,
 }: IFruitProductCardProps) {
+  const [disabled, setDisabled] = useState<boolean>(false);
   const handleClick = async () => {
+    setDisabled(true);
     try {
       const supabase = createClient();
-
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
+        setDisabled(false);
         return alert("Must be logged in to add fruits to the cart");
       }
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`,
+        {
+          fruitId: id,
+        },
+      );
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/cart`, {
-        method: "POST",
-        body: JSON.stringify({ id: id }),
-      });
-      const data = await res.json();
-      if (data) {
+      if (res) {
+        setDisabled(false);
         revalidateSepcificPath("/basket");
         alert("Added to cart successfully");
       }
@@ -70,8 +77,9 @@ export default function FruitProductCard({
           {description}
         </p>
         <button
-          className="duratin-300 w-full rounded-lg border-2 border-yellow-500 py-2 text-yellow-500 transition-colors hover:bg-yellow-500 hover:text-zinc-950 active:bg-yellow-300 xl:text-md"
+          className="duratin-300 w-full rounded-lg border-2 border-yellow-500 py-2 text-yellow-500 transition-colors hover:bg-yellow-500 hover:text-zinc-950 active:bg-yellow-300 disabled:border-yellow-900 disabled:bg-yellow-900 xl:text-md"
           onClick={handleClick}
+          disabled={disabled}
         >
           Add to cart
         </button>
