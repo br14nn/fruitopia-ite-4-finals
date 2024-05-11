@@ -24,10 +24,10 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
-      await revalidateAllPaths();
-      setUser(null);
       router.replace("/");
+      await supabase.auth.signOut();
+      revalidateAllPaths();
+      setUser(null);
     } catch (error) {
       alert("Failed to logout user.");
     }
